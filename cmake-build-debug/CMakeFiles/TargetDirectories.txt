@@ -1,3 +1,3 @@
-C:/Users/kubat/CLionProjects/czadanie22/cmake-build-debug/CMakeFiles/czadanie22.dir
-C:/Users/kubat/CLionProjects/czadanie22/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/kubat/CLionProjects/czadanie22/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/JakubTeterycz/Documents/GitHub/PD2-C/cmake-build-debug/CMakeFiles/czadanie22.dir
+C:/Users/JakubTeterycz/Documents/GitHub/PD2-C/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/JakubTeterycz/Documents/GitHub/PD2-C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
