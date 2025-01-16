@@ -26,12 +26,8 @@ void addMovie(User *root, int userId, int movieId);
 void delMovie(User *root, int userId, int movieId);
 void printUserMovies(User *root, int userId);
 
-int compareInts(const void *a, const void *b) {
-    return (*(int *)a - *(int *)b);
-}
-
 int main() {
-    User *root = createUser(0, nullptr);
+    User *root = createUser(0, NULL);
 
     char command[50];
     while (scanf("%s", command) != EOF) {
@@ -99,7 +95,7 @@ User *findUser(User *root, int id) {
             return found;
         }
     }
-    return nullptr;
+    return NULL;
 }
 
 void addUser(User *root, int parentId, int userId) {
@@ -153,7 +149,6 @@ void delUser(User *root, int userId) {
     printf("OK\n");
 }
 
-
 void addMovie(User *root, int userId, int movieId) {
     User *user = findUser(root, userId);
     if (!user) {
@@ -191,6 +186,27 @@ void delMovie(User *root, int userId, int movieId) {
     printf("ERROR\n");
 }
 
+void mergeSortedArrays(int *arr1, int size1, int *arr2, int size2, int *result, int *resultSize) {
+    int i = 0, j = 0, k = 0;
+    while (i < size1 && j < size2) {
+        if (arr1[i] < arr2[j]) {
+            result[k++] = arr1[i++];
+        } else if (arr1[i] > arr2[j]) {
+            result[k++] = arr2[j++];
+        } else {
+            result[k++] = arr1[i++];
+            j++;
+        }
+    }
+    while (i < size1) {
+        result[k++] = arr1[i++];
+    }
+    while (j < size2) {
+        result[k++] = arr2[j++];
+    }
+    *resultSize = k;
+}
+
 void printUserMovies(User *root, int userId) {
     User *user = findUser(root, userId);
     if (!user) {
@@ -206,30 +222,20 @@ void printUserMovies(User *root, int userId) {
         return;
     }
 
-    int *allMovies = (int *)malloc(sizeof(int) * totalMovies);
-    int index = 0;
-
-    for (int i = 0; i < user->movieCount; i++) {
-        allMovies[index++] = user->movies[i];
-    }
+    int *mergedMovies = (int *)malloc(sizeof(int) * totalMovies);
+    int mergedCount;
 
     if (user->parent) {
-        for (int i = 0; i < user->parent->movieCount; i++) {
-            allMovies[index++] = user->parent->movies[i];
-        }
+        mergeSortedArrays(user->movies, user->movieCount, user->parent->movies, parentMovies, mergedMovies, &mergedCount);
+    } else {
+        memcpy(mergedMovies, user->movies, sizeof(int) * user->movieCount);
+        mergedCount = user->movieCount;
     }
 
-    qsort(allMovies, totalMovies, sizeof(int), compareInts);
-    int lastPrinted = -1;
-    for (int i = 0; i < totalMovies; i++) {
-        if (allMovies[i] != lastPrinted) {
-            printf("%d ", allMovies[i]);
-            lastPrinted = allMovies[i];
-        }
+    for (int i = 0; i < mergedCount; i++) {
+        printf("%d ", mergedMovies[i]);
     }
     printf("\n");
 
-    free(allMovies);
+    free(mergedMovies);
 }
-
-
